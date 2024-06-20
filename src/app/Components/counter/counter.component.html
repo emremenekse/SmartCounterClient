@@ -1,0 +1,80 @@
+<!-- counter.component.html -->
+<div class="container mx-auto p-4">
+  <form [formGroup]="meterReadingForm" (ngSubmit)="onSubmit()" class="space-y-4">
+    <div class="form-group">
+      <label for="serialNumber">Serial Number</label>
+      <input id="serialNumber" type="text" formControlName="serialNumber" class="form-control" />
+      <div *ngIf="meterReadingForm.get('serialNumber')?.invalid && meterReadingForm.get('serialNumber')?.touched"
+        class="text-red-500">
+        Serial Number must be 8 characters long.
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="measurementTime">Measurement Time</label>
+      <input id="measurementTime" type="datetime-local" formControlName="measurementTime" class="form-control" />
+      <div *ngIf="meterReadingForm.get('measurementTime')?.invalid && meterReadingForm.get('measurementTime')?.touched"
+        class="text-red-500">
+        Measurement Time is required.
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="lastIndex">Last Index</label>
+      <input id="lastIndex" type="number" formControlName="lastIndex" class="form-control" />
+      <div *ngIf="meterReadingForm.get('lastIndex')?.invalid && meterReadingForm.get('lastIndex')?.touched"
+        class="text-red-500">
+        Last Index is required.
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="voltage">Voltage</label>
+      <input id="voltage" type="number" formControlName="voltage" class="form-control" />
+      <div *ngIf="meterReadingForm.get('voltage')?.invalid && meterReadingForm.get('voltage')?.touched"
+        class="text-red-500">
+        Voltage is required.
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="current">Current</label>
+      <input id="current" type="number" formControlName="current" class="form-control" />
+      <div *ngIf="meterReadingForm.get('current')?.invalid && meterReadingForm.get('current')?.touched"
+        class="text-red-500">
+        Current is required.
+      </div>
+    </div>
+    <button type="submit" class="btn btn-primary" [disabled]="meterReadingForm.invalid">Submit</button>
+  </form>
+
+  <div class="mt-8">
+    <input type="text" placeholder="Filter by Serial Number" [(ngModel)]="filterSerialNumber" class="form-control"
+      (input)="applyFilter()" />
+  </div>
+
+  <table class="table table-striped mt-4">
+    <thead>
+      <tr>
+        <th>Serial Number</th>
+        <th>Measurement Time</th>
+        <th>Last Index</th>
+        <th>Voltage</th>
+        <th>Current</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let reading of filteredReadings">
+        <td>{{ reading.serialNumber }}</td>
+        <td>{{ reading.measurementTime | date:'dd/MM/yyyy, HH:mm' }}</td>
+        <td>{{ reading.lastIndex }}</td>
+        <td>{{ reading.voltage }}</td>
+        <td>{{ reading.current }}</td>
+        <td>
+          <div class="flex space-x-2">
+            <button (click)="onCreateReport(reading)" class="btn btn-primary">
+              <i class="bi bi-file-earmark-plus"></i>
+            </button>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

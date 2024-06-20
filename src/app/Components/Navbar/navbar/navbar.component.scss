@@ -1,0 +1,26 @@
+/* navbar.component.scss */
+.navbar {
+  background-color: #3b82f6; /* Tailwind CSS bg-blue-500 */
+  color: white; /* Tailwind CSS text-white */
+}
+
+.nav-link {
+  color: white; /* Tailwind CSS text-white */
+  &:hover {
+    background-color: #2563eb; /* Tailwind CSS hover:bg-blue-700 */
+  }
+  border-radius: 0.25rem; /* Tailwind CSS rounded */
+  display: flex; /* Tailwind CSS flex */
+  align-items: center; /* Tailwind CSS items-center */
+  gap: 0.5rem; /* Tailwind CSS space-x-2 equivalent */
+  margin-right: 1rem; /* Bootstrap me-3 */
+}
+
+.bi {
+  font-size: 24px;
+  margin-right: 8px;
+}
+
+.navbar-toggler-icon {
+  color: white; /* Tailwind CSS text-white */
+}

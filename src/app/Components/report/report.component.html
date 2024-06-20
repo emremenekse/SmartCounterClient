@@ -1,0 +1,64 @@
+<div class="container mx-auto p-4">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Serial Number</th>
+        <th>Requested Time</th>
+        <th>Measurement Time</th> <!-- Yeni kolon eklendi -->
+        <th>Status</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let request of reportRequests">
+        <td>{{ request.serialNumber }}</td>
+        <td>{{ request.requestTime | date:'dd/MM/yyyy, HH:mm' }}</td>
+        <td>{{ request.measurementTime | date:'dd/MM/yyyy, HH:mm' }}</td> <!-- Yeni veri hücresi eklendi -->
+        <td>{{ request.status }}</td>
+        <td>
+          <div class="flex space-x-2">
+            <button (click)="onShowDetails(request)" class="btn btn-primary">
+              <i class="bi bi-file-earmark-plus"></i>
+            </button>
+            <button (click)="onDownloadReport(request.id)" class="btn btn-success">
+              <i class="bi bi-download"></i>
+            </button>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- Overlay (Modal) -->
+  <div class="modal" [ngClass]="{ 'is-active': showModal }">
+    <div class="modal-background" (click)="closeModal()"></div>
+    <div class="modal-content">
+      <div class="box">
+        <h3 class="title is-4">Details</h3>
+        <table class="table is-striped">
+          <thead>
+            <tr>
+              <th>Serial Number</th>
+              <th>Measurement Time</th>
+              <th>Last Index</th>
+              <th>Voltage</th>
+              <th>Current</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngIf="meterReading">
+              <td>{{ meterReading.serialNumber }}</td>
+              <td>{{ meterReading.measurementTime | date:'dd/MM/yyyy, HH:mm' }}</td>
+              <td>{{ meterReading.lastIndex }}</td>
+              <td>{{ meterReading.voltage }}</td>
+              <td>{{ meterReading.current }}</td>
+            </tr>
+          </tbody>
+        </table>
+        <button class="modal-close is-large text-white bg-gray-500 hover:bg-gray-700 rounded-full p-3"
+          aria-label="close" (click)="closeModal()">Close</button>
+      </div>
+    </div>
+    <button class="modal-close is-large" aria-label="close" (click)="closeModal()"></button>
+  </div>
+</div>
